@@ -1,18 +1,25 @@
 ---
-kr_url: github.com/kraken-hpc/kraken
-kr_repo: https://github.com/kraken-hpc/kraken.git
+# repo url to use
+kr_repo: https://github.com/kraken-hpc/kraken-layercake.git
+# repo version to use (tree-like, branch, tag, commit)
 kr_repo_version: main 
-kr_build_args: "-v -force"
+# working directory for source
 kr_src_dir: "/home/vagrant/kraken-src"
-kr_build: "kraken-build"
-kr_build_dir: "{{ kr_src_dir }}/build"
-kr_conf_file: "{{ kr_src_dir }}/config/vbox.yaml"
-kr_target: kraken-linux-amd64
-kr_link_dir: /home/vagrant
+# build with vbox?
+kr_with_vbox: false
+# build rpm instead of direct compilation?
 kr_rpm: true
-kr_version: 1.0
-kr_dist_string: "vbox"
-kr_release: "1"
+# when building rpm, include initramfs?
+kr_rpm_with_initramfs: false
+
+### FIXME - we should be able to derive versions from spec file
+# version of kraken/layercake build
+kr_version: 0.1.0
+# release of kraken/layercake build, e.g. 0.1.0-rc1
+kr_release: "rc1"
+
+### Computed values
 kr_rpm_path: "{{ ansible_env.HOME }}/rpmbuild/RPMS/x86_64/\
-             kraken-{{ kr_version }}-{{ kr_release }}{{ kr_dist_string }}.\
+             kraken-layercake-{{ kr_version }}-{{ kr_release }}{{ kr_dist_string }}.\
              x86_64.rpm"
+kr_target: "{{ 'kraken-layercake-vbox' if kr_vbox else 'kraken-layercake'}}"
