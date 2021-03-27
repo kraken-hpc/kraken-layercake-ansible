@@ -6,7 +6,7 @@ kr_repo_version: main
 # working directory for source
 kr_src_dir: "/home/vagrant/kraken-src"
 # build with vbox?
-kr_with_vbox: false
+kr_with_vbox: true
 # build rpm instead of direct compilation?
 kr_rpm: true
 # when building rpm, include initramfs?

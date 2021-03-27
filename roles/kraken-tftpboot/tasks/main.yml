@@ -7,8 +7,8 @@
 - name: Set kernel facts
   set_fact:
     mod_dir: "/lib/modules/{{ kern_out.stdout }}"
-    kernel_file: "/boot/vmlinuz-{{ kern_out.stdout }}"
-    kr_tftp_dir: "{{ kr_tftp_base }}/amd64/vbox"
+    kernel_file: "vmlinuz-{{ kern_out.stdout }}"
+    kr_tftp_dir: "{{ kr_tftp_base }}/amd64/{{ kr_platform }}"
 
 - debug:
     msg: >
@@ -37,13 +37,15 @@
 
 - name: Copy kernel to TFTP directory
   copy:
-    src: "{{ kernel_file }}"
-    dest: "{{ kr_tftp_dir }}/vmlinuz"
+    src: "/boot/{{ kernel_file }}"
+    dest: "{{ kr_tftp_dir }}/{{ kernel_file }}"
     mode: 0644
     remote_src: true
 
-- name: Link pxelinux.cfg to TFTP directory
-  file:
-    src: "{{ kr_pxelinux_cfg }}"
+- name: Write pxelinux.cfg to TFTP directory
+  template:
+    src: default.tpl.j2
     dest: "{{ kr_tftp_dir }}/pxelinux.cfg"
-    state: link
+    owner: root
+    group: root
+    mode: 0644
