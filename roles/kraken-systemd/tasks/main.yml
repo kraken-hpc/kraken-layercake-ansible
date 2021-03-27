@@ -1,9 +1,9 @@
 ---
-- name: Install kraken service file
+- name: Install kraken-layercake service file
   become: true
   template:
-    src: 'kraken.service.j2'
-    dest: '/usr/lib/systemd/system/kraken.service'
+    src: 'kraken-layercake.service.j2'
+    dest: '/usr/lib/systemd/system/kraken-layercake.service'
     owner: root
     group: root
     mode: 0644
@@ -26,7 +26,7 @@
 - name: Enable & start kraken service
   become: true
   systemd:
-    name: kraken.service
+    name: kraken-layercake.service
     enabled: true
     state: started
     daemon_reload: true
