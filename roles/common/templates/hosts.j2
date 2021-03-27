@@ -1,0 +1,4 @@
+127.0.0.1 localhost localhost.localdomain
+{% for h in hosts %}
+{{ h.ip }}  {{ h.hostnames|join(' ') }}
+{% endfor %}
