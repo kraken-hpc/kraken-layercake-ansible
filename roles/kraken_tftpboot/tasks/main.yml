@@ -46,6 +46,4 @@
   template:
     src: default.tpl.j2
     dest: "{{ kr_tftp_dir }}/pxelinux.cfg"
-    owner: root
-    group: root
     mode: 0644
