@@ -42,6 +42,7 @@
         --target x86_64-generic-linux
         {{ "--with vbox" if kr_with_vbox else "" }}
         {{ "--with initramfs" if kr_rpm_with_initramfs else "" }}
+        -D 'KrakenWorkingDirectory {{ kr_rpm_working_dir }}'
         -ta "kraken-layercake-{{ kr_version }}.tar.gz"
       args:
         chdir: "{{ kr_src_dir }}"

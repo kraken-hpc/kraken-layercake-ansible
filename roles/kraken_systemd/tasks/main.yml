@@ -13,20 +13,20 @@
   become: true
   shell:
     cmd: >
-      /usr/sbin/kraken -printrc
+      /usr/sbin/{{ "kraken-layercake-vbox" if kr_with_vbox else "kraken-layercake" }} -printrc
       -id "{{ kraken_id }}"
       -ip "{{ kraken_ip }}"
       -ipapi "{{ kraken_ipapi }}"
       -log "{{ kraken_loglevel }}"
       -state "{{ kraken_state_file }}"
-      > /etc/kraken/config.yaml
+      > /etc/kraken/{{ "layercake-vbox" if kr_with_vbox else "layercake" }}/config.yaml
       && touch /etc/kraken/.ansible_config
     creates: /etc/kraken/.ansible_config
 
 - name: Enable & start kraken service
   become: true
   systemd:
-    name: kraken-layercake.service
+    name: "{{ 'kraken-layercake-vbox.service' if kr_with_vbox else 'kraken-layercake.service' }}"
     enabled: true
     state: started
     daemon_reload: true

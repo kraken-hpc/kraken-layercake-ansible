@@ -42,8 +42,14 @@
     mode: 0644
     remote_src: true
 
+- name: Make pxelinux.cfg dir
+  file:
+    path: "{{ kr_tftp_dir }}/pxelinux.cfg"
+    state: directory
+    mode: 0755
+
 - name: Write pxelinux.cfg to TFTP directory
   template:
     src: default.tpl.j2
-    dest: "{{ kr_tftp_dir }}/pxelinux.cfg"
+    dest: "{{ kr_tftp_dir }}/pxelinux.cfg/default.tpl"
     mode: 0644

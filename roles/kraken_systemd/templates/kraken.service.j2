@@ -6,7 +6,7 @@ Requires=network.target
 [Service]
 Type=notify
 WorkingDirectory={{ ansible_env.HOME }}
-ExecStart={{ kr_src_dir ~ '/' ~ kr_target }} -config /etc/kraken/config.yaml -sdnotify -noprefix
+ExecStart=/usr/sbin/{{ "kraken-layercake-vbox" if kr_with_vbox else "kraken-layercake" }} -config /etc/kraken/config.yaml -sdnotify -noprefix
 
 [Install]
 WantedBy=multi-user.target

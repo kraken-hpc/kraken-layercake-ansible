@@ -31,15 +31,15 @@
 
 - name: Create authorized_keys
   copy:
-    src: "{{ kr_conig_base }}/id_rsa.pub"
-    dest: "{{ kr_conig_base }}/authorized_keys"
+    src: "{{ kr_config_base }}/id_rsa.pub"
+    dest: "{{ kr_config_base }}/authorized_keys"
     remote_src: true
     mode: 0600
 
 - name: Create entropy.dat for child VMs
-  command: "dd if=/dev/urandom of={{ kr_conig_base }}/entropy.dat bs=1k count=4"
+  command: "dd if=/dev/urandom of={{ kr_config_base }}/entropy.dat bs=1k count=4"
   args:
-    creates: "{{ kr_conig_base }}/random_seed.dat"
+    creates: "{{ kr_config_base }}/random_seed.dat"
 
 - name: Create layer0-config.xz
   command: |

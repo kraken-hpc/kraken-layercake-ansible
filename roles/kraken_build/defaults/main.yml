@@ -13,6 +13,7 @@ kr_rpm: true
 kr_rpm_with_initramfs: false
 # `.<dist>.x86_64.rpm`, e.g. "el8"
 kr_rpm_dist: el8
+kr_rpm_working_dir: /home/vagrant
 
 ### FIXME - we should be able to derive versions from spec file
 # version of kraken/layercake build
@@ -22,5 +23,7 @@ kr_release: "rc1"
 
 ### Computed values
 kr_rpm_path: "{{ ansible_env.HOME }}/rpmbuild/RPMS/x86_64/\
-             kraken-layercake-{{ kr_version }}-{{ kr_release }}.{{ kr_rpm_dist}}.x86_64.rpm"
+             kraken-layercake-{{ 'vbox-' if kr_with_vbox else '' }}\
+             {{ kr_version }}-{{ kr_release }}\
+             .{{ kr_rpm_dist}}.x86_64.rpm"
 kr_target: "{{ 'kraken-layercake-vbox' if kr_vbox else 'kraken-layercake'}}"
