@@ -1,10 +1,11 @@
 ---
 - name: Install build prerequisits
+  become: true
   package:
-    name: 
+    name:
       - git
       - golang
-    state: present 
+    state: present
 
 - name: go get kraken-layercake
   git:
@@ -31,7 +32,7 @@
         name: rpm-build
         state: present
     - name: Create distribution tarball
-      command: git archive -o "kraken-layercake-{{ kr_version }}.tar.gz" --prefix="kraken-layercake-{{ kr_version }}/" HEAD
+      command: git archive -o "kraken-layercake-{{ kr_version }}.tar.gz" --prefix="kraken-layercake-{{ kr_version }}/" HEAD # noqa 303
       args:
         creates: "kraken-layercake-{{ kr_version }}.tar.gz"
         chdir: "{{ kr_src_dir }}"
@@ -40,7 +41,7 @@
         rpmbuild
         --target x86_64-generic-linux
         {{ "--with vbox" if kr_with_vbox else "" }}
-        {{ "--with initramfs if kr_rpm_with_initramfs else "" }}
+        {{ "--with initramfs" if kr_rpm_with_initramfs else "" }}
         -ta "kraken-layercake-{{ kr_version }}.tar.gz"
       args:
         chdir: "{{ kr_src_dir }}"
