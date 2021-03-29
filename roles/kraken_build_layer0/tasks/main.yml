@@ -13,14 +13,14 @@
 - name: Create layer0-kmod.xz
   command: |
     /bin/bash {{ kr_kmod_script }}
-    -o {{ kr_tftp_dir }}/layer0-kmod.xz
+    -o {{ kr_tftp_dir }}/layer0-kmod.{{ kern_out.stdout }}.xz
     -t /tmp/layer0-kmod
     -k
     {{ "-a" if kr_kmod_all else "" }}
     {{ kern_out.stdout }}
     {{ kr_kmod_modules|join(' ') }}
   args:
-    creates: "{{ kr_tftp_dir }}/layer0-kmod.xz"
+    creates: "{{ kr_tftp_dir }}/layer0-kmod.{{ kern_out.stdout }}.xz"
 
 # setup config
 - name: Create image SSH keys
