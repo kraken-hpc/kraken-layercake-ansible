@@ -1,26 +1,26 @@
 ---
-- name: Create layer0-base.xz
+- name: Create layer0-base.gz
   command: |
     /bin/bash {{ kr_base_script }}
-    -o {{ kr_tftp_dir }}/layer0-base.xz
+    -o {{ kr_tftp_dir }}/layer0-base.gz
     -t /tmp/layer0-base
-    -k
+    -k -g
     amd64
     {{ "github.com/kraken-hpc/kraken-layercake/cmd/kraken-layercake-vbox" if kr_with_vbox else "" }}
   args:
-    creates: "{{ kr_tftp_dir}}/layer0-base.xz"
+    creates: "{{ kr_tftp_dir}}/layer0-base.gz"
 
-- name: Create layer0-kmod.xz
+- name: Create layer0-kmod.gz
   command: |
     /bin/bash {{ kr_kmod_script }}
-    -o {{ kr_tftp_dir }}/layer0-kmod.{{ kern_out.stdout }}.xz
+    -o {{ kr_tftp_dir }}/layer0-kmod.{{ kern_out.stdout }}.gz
     -t /tmp/layer0-kmod
-    -k
+    -k -g
     {{ "-a" if kr_kmod_all else "" }}
     {{ kern_out.stdout }}
     {{ kr_kmod_modules|join(' ') }}
   args:
-    creates: "{{ kr_tftp_dir }}/layer0-kmod.{{ kern_out.stdout }}.xz"
+    creates: "{{ kr_tftp_dir }}/layer0-kmod.{{ kern_out.stdout }}.gz"
 
 # setup config
 - name: Create image SSH keys
@@ -41,13 +41,13 @@
   args:
     creates: "{{ kr_config_base }}/random_seed.dat"
 
-- name: Create layer0-config.xz
+- name: Create layer0-config.gz
   command: |
     /bin/bash {{ kr_config_script }}
-    -o {{ kr_tftp_dir }}/layer0-config.xz
+    -o {{ kr_tftp_dir }}/layer0-config.gz
     -t /tmp/layer0-config
-    -k
+    -k -g
     {{ kr_config_base }}
   args:
-    creates: "{{ kr_tftp_dir }}/layer0-config.xz"
+    creates: "{{ kr_tftp_dir }}/layer0-config.gz"
 
