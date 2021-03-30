@@ -1,0 +1,53 @@
+---
+- name: Create layer0-base.gz
+  command: |
+    /bin/bash {{ kr_base_script }}
+    -o {{ kr_tftp_dir }}/layer0-base.gz
+    -t /tmp/layer0-base
+    -k -g
+    amd64
+    {{ "github.com/kraken-hpc/kraken-layercake/cmd/kraken-layercake-vbox" if kr_with_vbox else "" }}
+  args:
+    creates: "{{ kr_tftp_dir}}/layer0-base.gz"
+
+- name: Create layer0-kmod.gz
+  command: |
+    /bin/bash {{ kr_kmod_script }}
+    -o {{ kr_tftp_dir }}/layer0-kmod.{{ kern_out.stdout }}.gz
+    -t /tmp/layer0-kmod
+    -k -g
+    {{ "-a" if kr_kmod_all else "" }}
+    {{ kern_out.stdout }}
+    {{ kr_kmod_modules|join(' ') }}
+  args:
+    creates: "{{ kr_tftp_dir }}/layer0-kmod.{{ kern_out.stdout }}.gz"
+
+# setup config
+- name: Create image SSH keys
+  command: ssh-keygen -N "" -f id_rsa
+  args:
+    chdir: "{{ kr_config_base }}"
+    creates: id_rsa
+
+- name: Create authorized_keys
+  copy:
+    src: "{{ kr_config_base }}/id_rsa.pub"
+    dest: "{{ kr_config_base }}/authorized_keys"
+    remote_src: true
+    mode: 0600
+
+- name: Create entropy.dat for child VMs
+  command: "dd if=/dev/urandom of={{ kr_config_base }}/entropy.dat bs=1k count=4"
+  args:
+    creates: "{{ kr_config_base }}/random_seed.dat"
+
+- name: Create layer0-config.gz
+  command: |
+    /bin/bash {{ kr_config_script }}
+    -o {{ kr_tftp_dir }}/layer0-config.gz
+    -t /tmp/layer0-config
+    -k -g
+    {{ kr_config_base }}
+  args:
+    creates: "{{ kr_tftp_dir }}/layer0-config.gz"
+

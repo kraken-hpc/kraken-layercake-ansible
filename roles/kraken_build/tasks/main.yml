@@ -1,0 +1,55 @@
+---
+- name: Install build prerequisits
+  become: true
+  package:
+    name:
+      - git
+      - golang
+    state: present
+
+- name: go get kraken-layercake
+  git:
+    repo: "{{ kr_repo }}"
+    dest: "{{ kr_src_dir }}"
+    version: "{{ kr_repo_version }}"
+
+- name: Build kraken from source
+  when: not kr_rpm
+  block:
+    - name: Build kraken-layercake
+      command: >
+        go build ./cmd/{{ kr_target }}
+      args:
+        creates: "{{ kr_src_dir }}/{{ kr_target }}"
+        chdir: "{{ kr_src_dir }}"
+
+- name: Build and install kraken rpm
+  when: kr_rpm
+  block:
+    - name: Install rpm build prerequisits
+      become: true
+      package:
+        name: rpm-build
+        state: present
+    - name: Create distribution tarball
+      command: git archive -o "kraken-layercake-{{ kr_version }}.tar.gz" --prefix="kraken-layercake-{{ kr_version }}/" HEAD # noqa 303
+      args:
+        creates: "kraken-layercake-{{ kr_version }}.tar.gz"
+        chdir: "{{ kr_src_dir }}"
+    - name: Build kraken RPM
+      command: >
+        rpmbuild
+        --target x86_64-generic-linux
+        {{ "--with vbox" if kr_with_vbox else "" }}
+        {{ "--with initramfs" if kr_rpm_with_initramfs else "" }}
+        -D 'KrakenWorkingDirectory {{ kr_rpm_working_dir }}'
+        -ta "kraken-layercake-{{ kr_version }}.tar.gz"
+      args:
+        chdir: "{{ kr_src_dir }}"
+        creates: "{{ kr_rpm_path }}"
+    - name: Install kraken rpm
+      become: true
+      dnf:
+        name: "{{ kr_rpm_path }}"
+        state: present
+        disable_gpg_check: true

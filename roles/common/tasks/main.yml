@@ -1,19 +1,35 @@
 ---
-- name: Include 'insecure' role
-  include_role:
-    name: insecure
+- name: disables firewalld
+  become: true
+  service:
+    name: firewalld
+    enabled: false
+    state: stopped
+
+- name: disables selinux
+  become: true
+  selinux:
+    state: disabled
 
 - name: Copy hosts file
   become: true
-  copy:
-    src: hosts
+  template:
+    src: hosts.j2
     dest: /etc/hosts
     owner: root
     group: root
     mode: 0644
 
-- name: Install epel-release
+- name: Install extra releases
   become: true
   package:
-    name: epel-release
+    name: "{{ extra_releases }}"
     state: present
+  when: extra_releases|length>0
+
+- name: Install extra packages
+  become: true
+  package:
+    name: "{{ extra_packages }}"
+    state: present
+  when: extra_packages|length>0

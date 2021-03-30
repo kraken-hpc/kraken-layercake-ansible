@@ -1,0 +1,5 @@
+---
+kr_tftp_base: /home/vagrant/tftp
+syslinux_tftpboot: /tftpboot
+kr_node_loglevel: 7
+kr_platform: vbox
