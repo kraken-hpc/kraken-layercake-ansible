@@ -2,7 +2,7 @@
 # repo url to use
 kr_repo: https://github.com/kraken-hpc/kraken-layercake.git
 # repo version to use (tree-like, branch, tag, commit)
-kr_repo_version: main 
+kr_repo_version: main
 # working directory for source
 kr_src_dir: "/home/vagrant/kraken-src"
 # build with vbox?

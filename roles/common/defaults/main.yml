@@ -1,5 +1,5 @@
 ---
 hosts: []
-extra_releases: 
+extra_releases:
   - epel-release
 extra_packages: []
