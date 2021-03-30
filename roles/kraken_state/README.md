@@ -19,7 +19,7 @@ kraken_nodes:
     'parentid': "{{ kraken_parent_id }}"
     'runstate': "{{ kraken_default_runstate }}"
     'extensions':
-      'VBox':
+      'Hypervisor':
         "apiServer": "vbm"
         "name": "kr1"
       'IPv4OverEthernet':
