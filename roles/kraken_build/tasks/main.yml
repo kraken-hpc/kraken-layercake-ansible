@@ -4,7 +4,7 @@
   package:
     name:
       - git
-      - golang-1.15-11
+      - golang
     state: present
 
 - name: go get kraken-layercake
