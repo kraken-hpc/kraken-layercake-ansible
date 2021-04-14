@@ -6,7 +6,7 @@
     -t /tmp/layer0-base
     -k -g
     amd64
-    {{ "github.com/kraken-hpc/kraken-layercake/cmd/kraken-layercake-vbox" if kr_with_vbox else "" }}
+    {{ "github.com/kraken-hpc/kraken-layercake/cmd/kraken-layercake-virt" if kr_with_vbox else "" }}
   args:
     creates: "{{ kr_tftp_dir}}/layer0-base.gz"
 
@@ -50,4 +50,3 @@
     {{ kr_config_base }}
   args:
     creates: "{{ kr_tftp_dir }}/layer0-config.gz"
-
