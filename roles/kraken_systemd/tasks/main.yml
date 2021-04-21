@@ -29,5 +29,5 @@
   systemd:
     name: "{{ 'kraken-layercake-virt.service' if kr_with_vbox else 'kraken-layercake.service' }}"
     enabled: true
-    state: started
+    state: restarted
     daemon_reload: true
