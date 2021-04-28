@@ -10,13 +10,13 @@
   become: true
   shell:
     cmd: >
-      podman run {{ layercake_image }}:{{ "virt-latest" if kr_with_vbox else "latest" }} 
-      -printrc 
-      -id "{{ kraken_id }}" 
-      -ip "{{ kraken_ip }}" 
-      -ipapi "{{ kraken_ipapi }}" 
-      -log "{{ kraken_loglevel }}" 
-      -state "{{ kraken_state_file }}" 
+      podman run {{ layercake_image }}:{{ "virt-latest" if kr_with_vbox else "latest" }}
+      -printrc
+      -id "{{ kraken_id }}"
+      -ip "{{ kraken_ip }}"
+      -ipapi "{{ kraken_ipapi }}"
+      -log "{{ kraken_loglevel }}"
+      -state "{{ kraken_state_file }}"
       > /etc/kraken/{{ "layercake-virt" if kr_with_vbox else "layercake" }}/config.yaml
       && touch /etc/kraken/.ansible_config
     creates: /etc/kraken/.ansible_config
