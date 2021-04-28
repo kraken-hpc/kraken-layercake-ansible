@@ -54,9 +54,11 @@
     dest: "{{ kr_tftp_dir }}/pxelinux.cfg/default.tpl"
     mode: 0644
 
+# Base is already created in the container so we'll just point to it
 - name: Create container symlink to layer0-base
+  when: kr_with_vbox
   file:
-    src: "/tftp/amd64/virt/layer0-base.gz"
+    src: "/tftp/amd64/{{ kr_platform }}/layer0-base.gz"
     dest: "{{ kr_tftp_dir }}/layer0-base.gz"
     state: link
     force: true

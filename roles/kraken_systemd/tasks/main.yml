@@ -8,21 +8,6 @@
     group: root
     mode: 0644
 
-- name: Write the kraken runtime configuration file
-  become: true
-  shell:
-    cmd: >
-      podman run docker.io/krakenhpc/kraken-layercake:{{ "virt-latest" if kr_with_vbox else "latest" }} 
-      -printrc 
-      -id "{{ kraken_id }}" 
-      -ip "{{ kraken_ip }}" 
-      -ipapi "{{ kraken_ipapi }}" 
-      -log "{{ kraken_loglevel }}" 
-      -state "{{ kraken_state_file }}" 
-      > /etc/kraken/{{ "layercake-virt" if kr_with_vbox else "layercake" }}/config.yaml
-      && touch /etc/kraken/.ansible_config
-    creates: /etc/kraken/.ansible_config
-
 - name: Enable & start kraken service
   become: true
   systemd:
@@ -30,10 +15,3 @@
     enabled: true
     state: restarted
     daemon_reload: true
-# - name: move tftp stuff
-#   become: true
-#   containers.podman.podman:
-#     podman_extra_args:
-#       - exec
-#       - kraken-layercake-virt
-#       - sh -c 'cp -r /root/tftp/* /tftp/'

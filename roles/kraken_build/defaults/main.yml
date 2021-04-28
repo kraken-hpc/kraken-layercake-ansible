@@ -1,10 +1,4 @@
 ---
-# repo url to use
-kr_repo: https://github.com/kraken-hpc/kraken-layercake.git
-# repo version to use (tree-like, branch, tag, commit)
-kr_repo_version: main
-# working directory for source
-kr_src_dir: "/home/vagrant/kraken-src"
 # build with vbox?
 kr_with_vbox: true
 # build rpm instead of direct compilation?
@@ -23,7 +17,7 @@ kr_release: "rc1"
 
 ### Computed values
 kr_rpm_path: "{{ ansible_env.HOME }}/rpmbuild/RPMS/x86_64/\
-             kraken-layercake-{{ 'vbox-' if kr_with_vbox else '' }}\
-             {{ kr_version }}-{{ kr_release }}\
-             .{{ kr_rpm_dist}}.x86_64.rpm"
+  kraken-layercake-{{ 'vbox-' if kr_with_vbox else '' }}\
+  {{ kr_version }}-{{ kr_release }}\
+  .{{ kr_rpm_dist}}.x86_64.rpm"
 kr_target: "{{ 'kraken-layercake-vbox' if kr_vbox else 'kraken-layercake'}}"

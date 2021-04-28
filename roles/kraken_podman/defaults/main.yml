@@ -1,32 +1,4 @@
 ---
-# # repo url to use
-# kr_repo: https://github.com/kraken-hpc/kraken-layercake.git
-# # repo version to use (tree-like, branch, tag, commit)
-# kr_repo_version: main
-# # working directory for source
-# kr_src_dir: "/home/vagrant/kraken-src"
-# build with vbox?
-kr_with_vbox: true
-# build rpm instead of direct compilation?
-kr_rpm: false
-# # when building rpm, include initramfs?
-# kr_rpm_with_initramfs: false
-# # `.<dist>.x86_64.rpm`, e.g. "el8"
-# kr_rpm_dist: el8
-# kr_rpm_working_dir: /home/vagrant
-
-# ### FIXME - we should be able to derive versions from spec file
-# # version of kraken/layercake build
-# kr_version: 0.1.0
-# # release of kraken/layercake build, e.g. 0.1.0-rc1
-# kr_release: "rc1"
-
-# ### Computed values
-# kr_rpm_path: "{{ ansible_env.HOME }}/rpmbuild/RPMS/x86_64/\
-#   kraken-layercake-{{ 'vbox-' if kr_with_vbox else '' }}\
-#   {{ kr_version }}-{{ kr_release }}\
-#   .{{ kr_rpm_dist}}.x86_64.rpm"
-# kr_target: "{{ 'kraken-layercake-vbox' if kr_vbox else 'kraken-layercake'}}"
 kraken_id: "123e4567-e89b-12d3-a456-426655440000"
 kraken_ip: "10.11.12.1"
 kraken_ipapi: "192.168.57.10"
@@ -36,33 +8,3 @@ kraken_working_directory: "{{ kr_tftp_base | dirname }}"
 layercake_image: "docker.io/krakenhpc/kraken-layercake"
 # layercake_image: "kraken-layercake"
 
-kr_config_base: /home/vagrant/support/base
-kr_base_script: "{{ kr_src_dir }}/utils/layer0/build-layer0-base.sh"
-kr_kmod_script: "{{ kr_src_dir }}/utils/layer0/build-layer0-kmod.sh"
-kr_config_script: "{{ kr_src_dir }}/utils/layer0/build-layer0-config.sh"
-# repo url to use
-kr_repo: https://github.com/kraken-hpc/kraken-layercake.git
-# repo version to use (tree-like, branch, tag, commit)
-kr_repo_version: main
-# working directory for source
-kr_src_dir: "/home/vagrant/kraken-src"
-kr_kmod_all: false
-# this is the module set for vbox vms
-kr_kmod_modules:
-  - ac97_bus
-  - acpi-cpufreq
-  - e1000
-  - i2c-piix4
-  - intel_pmc_core
-  - serio_raw
-  - snd
-  - snd-ac97-codec
-  - snd-intel8x0
-  - snd-pcm
-  - snd-pcsp
-  - snd-timer
-  - soundcore
-  - video
-  - rbd
-  - overlay
-  - squashfs

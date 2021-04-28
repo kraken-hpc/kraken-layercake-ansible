@@ -1,5 +1,7 @@
 ---
+# Base is created for us in the docker image
 - name: Create layer0-base.gz
+  when: not kr_with_vbox
   command: |
     /bin/bash {{ kr_base_script }}
     -o {{ kr_tftp_dir }}/layer0-base.gz
