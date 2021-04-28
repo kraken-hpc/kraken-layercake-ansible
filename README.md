@@ -1,10 +1,10 @@
 # Kraken/Layercake/Ansible
 
-***Please excuse our dust.  The kraken/layercake project has recently been split from the main kraken project.  These roles are curreently broken, but we're working actively on getting them up to speed!***
+**_Please excuse our dust. The kraken/layercake project has recently been split from the main kraken project. These roles are currently broken, but we're working actively on getting them up to speed!_**
 
 This repository contains a set of [Ansible](https://www.ansible.com/) roles taht can be used to deploy a [Kraken](https://github.com/kraken-hpc/kraken)/[Layercake](https://github.com/kraken-hpc/kraken-layercake) cluster.
 
-For most modern systems, configuration management should be the ultimate source of truth for configuration information for a system.  To that end, we provide some ansible roles that can control Kraken.
+For most modern systems, configuration management should be the ultimate source of truth for configuration information for a system. To that end, we provide some ansible roles that can control Kraken.
 
 The ansible roles in this directory serve two purposes:
 
