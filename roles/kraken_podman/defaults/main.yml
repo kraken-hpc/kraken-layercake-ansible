@@ -6,5 +6,3 @@ kraken_loglevel: 7
 kraken_working_directory: "{{ kr_tftp_base | dirname }}"
 
 layercake_image: "docker.io/krakenhpc/kraken-layercake"
-# layercake_image: "kraken-layercake"
-
