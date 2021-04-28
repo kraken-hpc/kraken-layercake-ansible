@@ -7,7 +7,6 @@
     owner: root
     group: root
     mode: 0644
-  # when: not kr_rpm
 
 - name: Write the kraken runtime configuration file
   become: true
@@ -31,3 +30,10 @@
     enabled: true
     state: restarted
     daemon_reload: true
+# - name: move tftp stuff
+#   become: true
+#   containers.podman.podman:
+#     podman_extra_args:
+#       - exec
+#       - kraken-layercake-virt
+#       - sh -c 'cp -r /root/tftp/* /tftp/'

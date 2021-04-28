@@ -53,3 +53,11 @@
     src: default.tpl.j2
     dest: "{{ kr_tftp_dir }}/pxelinux.cfg/default.tpl"
     mode: 0644
+
+- name: Create container symlink to layer0-base
+  file:
+    src: "/tftp/amd64/virt/layer0-base.gz"
+    dest: "{{ kr_tftp_dir }}/layer0-base.gz"
+    state: link
+    force: true
+    follow: false
