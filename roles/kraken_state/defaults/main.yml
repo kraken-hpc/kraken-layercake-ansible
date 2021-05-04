@@ -1,4 +1,4 @@
 ---
-kraken_cfgdir: /etc/kraken/layercake{{ "-vbox" if kr_with_vbox else "" }}
+kraken_cfgdir: /etc/kraken/layercake{{ "-virt" if kr_with_vbox else "" }}
 kraken_state_file: "{{ kraken_cfgdir }}/state.json"
 kraken_nodes: []

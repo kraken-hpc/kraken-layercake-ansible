@@ -1,0 +1,40 @@
+---
+- name: Install podman
+  become: true
+  package:
+    name:
+      - podman
+    state: present
+
+- name: Write the kraken runtime configuration file
+  become: true
+  shell:
+    cmd: >
+      podman run {{ layercake_image }}:{{ "virt-latest" if kr_with_vbox else "latest" }}
+      -printrc
+      -id "{{ kraken_id }}"
+      -ip "{{ kraken_ip }}"
+      -ipapi "{{ kraken_ipapi }}"
+      -log "{{ kraken_loglevel }}"
+      -state "{{ kraken_state_file }}"
+      > /etc/kraken/{{ "layercake-virt" if kr_with_vbox else "layercake" }}/config.yaml
+      && touch /etc/kraken/.ansible_config
+    creates: /etc/kraken/.ansible_config
+
+- name: Create Kraken container
+  become: true
+  register: container_output
+  containers.podman.podman_container:
+    name: '{{ "kraken-layercake-virt" if kr_with_vbox else "kraken-layercake" }}'
+    image: '{{ layercake_image }}:{{ "virt-latest" if kr_with_vbox else "latest" }}'
+    state: created
+    volume:
+      - "{{ kr_tftp_base }}/amd64/{{ kr_platform }}:/tftp/amd64/{{ kr_platform }}"
+      - /etc/kraken:/etc/kraken
+    network: host
+    command:
+      - -config
+      - /etc/kraken/{{ "layercake-virt" if kr_with_vbox else "layercake" }}/config.yaml
+      - -noprefix
+
+- set_fact: container_id={{ container_output.container.Id }}

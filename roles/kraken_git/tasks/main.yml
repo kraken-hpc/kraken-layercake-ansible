@@ -1,0 +1,13 @@
+---
+- name: Install git
+  become: true
+  package:
+    name:
+      - git
+    state: present
+
+- name: go get kraken-layercake
+  git:
+    repo: "{{ kr_repo }}"
+    dest: "{{ kr_src_dir }}"
+    version: "{{ kr_repo_version }}"
